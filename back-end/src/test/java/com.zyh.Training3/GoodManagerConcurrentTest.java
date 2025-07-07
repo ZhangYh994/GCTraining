@@ -22,19 +22,25 @@ public class GoodManagerConcurrentTest {
                     try {
                         switch (op) {
                             case 0: // 添加
-                                manager.addGoods(new Goods("商品" + random.nextInt(10000)));
+                                Goods newGoods = new Goods("商品" + random.nextInt(10000));
+                                manager.addGoods(newGoods);
+                                System.out.println(Thread.currentThread().getName() + " 添加: " + newGoods);
                                 break;
                             case 1: // 删除
                                 int size = manager.size();
                                 if (size > 0) {
-                                    manager.removeGoods(random.nextInt(size));
+                                    int removeIndex = random.nextInt(size);
+                                    manager.removeGoods(removeIndex);
+                                    System.out.println(Thread.currentThread().getName() + " 删除索引: " + removeIndex);
                                 }
                                 break;
                             case 2: // 查看
                                 manager.getGoodsList();
+                                System.out.println(Thread.currentThread().getName() + " 查看商品列表");
                                 break;
                             case 3: // 清空
                                 manager.clearGoods();
+                                System.out.println(Thread.currentThread().getName() + " 清空商品列表");
                                 break;
                         }
                     } catch (Exception e) {
@@ -53,7 +59,6 @@ public class GoodManagerConcurrentTest {
         latch.await();
 
         assert !errorOccurred.get() : "并发操作过程中出现异常！";
-        assert manager.size() >= 0 : "商品数量不应为负数"; // 额外校验
+        assert manager.size() >= 0 : "商品数量不应为负数";
     }
 }
-
