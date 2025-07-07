@@ -60,12 +60,12 @@ public class GoodManagerConcurrentSequentialTest {
                                     int size = manager.size();
                                     if (size > 0) {
                                         int index = random.nextInt(size);
-                                        Goods removedGood = manager.removeGoods(index);
-                                        if (removedGood != null) {
+                                        try {
+                                            Goods removedGood = manager.removeGoods(index);
                                             printWithTimestamp(Thread.currentThread().getName() + " 删除成功: " +
                                                     removedGood.getName() + " (索引: " + index + ")");
-                                        } else {
-                                            printWithTimestamp(Thread.currentThread().getName() + " 删除失败: 索引 " + index + " 无效");
+                                        } catch (IndexOutOfBoundsException e) {
+                                            printWithTimestamp(Thread.currentThread().getName() + " 删除时捕获异常: " + e.getMessage());
                                         }
                                         printListState(manager);
                                     } else {

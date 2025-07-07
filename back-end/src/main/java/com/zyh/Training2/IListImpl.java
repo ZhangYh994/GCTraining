@@ -1,6 +1,7 @@
 package com.zyh.Training2;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 
 class Node<E> {
@@ -14,7 +15,7 @@ class Node<E> {
 }
 
 
-public class IListImpl<E> extends Object implements IList<E> {
+public class IListImpl<E> extends Object implements IList<E>{
     private Node<E> head;
     private int size;
 
@@ -273,6 +274,28 @@ public class IListImpl<E> extends Object implements IList<E> {
         }
 
         return -1;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            private Node<E> current = head;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public E next() {
+                if (!hasNext()) {
+                    throw new java.util.NoSuchElementException();
+                }
+                E data = current.data;
+                current = current.next;
+                return data;
+            }
+        };
     }
 
     /**

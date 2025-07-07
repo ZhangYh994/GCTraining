@@ -30,8 +30,12 @@ public class GoodManagerConcurrentTest {
                                 int size = manager.size();
                                 if (size > 0) {
                                     int removeIndex = random.nextInt(size);
-                                    manager.removeGoods(removeIndex);
-                                    System.out.println(Thread.currentThread().getName() + " 删除索引: " + removeIndex);
+                                    try {
+                                        manager.removeGoods(removeIndex);
+                                        System.out.println(Thread.currentThread().getName() + " 删除索引: " + removeIndex);
+                                    } catch (IndexOutOfBoundsException e) {
+                                        System.out.println(Thread.currentThread().getName() + " 删除时捕获异常: " + e.getMessage());
+                                    }
                                 }
                                 break;
                             case 2: // 查看
