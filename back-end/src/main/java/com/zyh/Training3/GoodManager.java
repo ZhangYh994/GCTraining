@@ -4,7 +4,6 @@ import com.zyh.Training2.IListImpl;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-
 public class GoodManager {
     private final IListImpl<Goods> goodsList = new IListImpl<>();
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
