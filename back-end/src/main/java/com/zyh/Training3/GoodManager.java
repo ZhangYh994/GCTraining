@@ -2,6 +2,7 @@ package com.zyh.Training3;
 
 import com.zyh.Training2.IListImpl;
 
+import java.util.Iterator;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class GoodManager {
@@ -24,7 +25,7 @@ public class GoodManager {
         try {
             int size = goodsList.size();
             if (size == 0 || index < 0 || index >= size) {
-                return null;
+                throw new IndexOutOfBoundsException("索引 " + index + " 不合法，无法删除商品。");
             }
             return goodsList.remove(index);
         } finally {
@@ -37,15 +38,9 @@ public class GoodManager {
         lock.readLock().lock();
         try {
             IListImpl<Goods> snapshot = new IListImpl<>();
-            for (int i = 0; i < goodsList.size(); i++) {
-                try {
-                    Goods g = goodsList.get(i);
-                    if (g != null) {
-                        snapshot.add(g);
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    // 并发下被删除，跳过
-                }
+            Iterator<Goods> it = goodsList.iterator();
+            while (it.hasNext()) {
+                snapshot.add(it.next());
             }
             return snapshot;
         } finally {

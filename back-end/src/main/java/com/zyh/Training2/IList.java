@@ -2,6 +2,7 @@ package com.zyh.Training2;
 
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 public interface IList<E>{
     int size();
@@ -25,4 +26,6 @@ public interface IList<E>{
     E remove(int index);
 
     int indexOf(Object o);
+
+    Iterator<E> iterator();
 }
