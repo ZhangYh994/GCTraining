@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 11 Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="title-bar">
+            <div class="title-left">
+                <span class="app-icon"></span>
+                <span class="app-title">Calculator</span>
+            </div>
+            <div class="title-buttons">
+                <button class="title-btn minimize" title="Minimize"></button>
+                <button class="title-btn maximize" title="Maximize"></button>
+                <button class="title-btn close" title="Close"></button>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="header-bar">
+                    <span class="menu-icon">
+                      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect y="7" width="20" height="2" rx="1" fill="#444"/>
+                        <rect y="12" width="20" height="2" rx="1" fill="#444"/>
+                        <rect y="17" width="20" height="2" rx="1" fill="#444"/>
+                      </svg>
+                    </span>
+                    <div class="mode">Standard</div>
+                </div>
+                <div class="display" id="display">0</div>
+                <div class="memory-row">
+                    <button class="button mem-gray">MC</button>
+                    <button class="button mem-gray">MR</button>
+                    <button class="button mem-black">M+</button>
+                    <button class="button mem-black">M-</button>
+                    <button class="button mem-black">MS</button>
+                </div>
+                <div class="buttons">
+                    <button class="button function">%</button>
+                    <button class="button function">CE</button>
+                    <button class="button function">C</button>
+                    <button class="button function">⌫</button>
+                    <button class="button function">⅟x</button>
+                    <button class="button function">x²</button>
+                    <button class="button function">²√x</button>
+                    <button class="button function">÷</button>
+                    <button class="button number">7</button>
+                    <button class="button number">8</button>
+                    <button class="button number">9</button>
+                    <button class="button function">×</button>
+                    <button class="button number">4</button>
+                    <button class="button number">5</button>
+                    <button class="button number">6</button>
+                    <button class="button function">−</button>
+                    <button class="button number">1</button>
+                    <button class="button number">2</button>
+                    <button class="button number">3</button>
+                    <button class="button function">+</button>
+                    <button class="button number">+/−</button>
+                    <button class="button number">0</button>
+                    <button class="button number">.</button>
+                    <button class="button equals">=</button>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="history-memory-panel">
+                    <span class="active">History</span>
+                    <span>Memory</span>
+                </div>
+                <div class="history-panel">
+                    <div class="history-empty">There's no history yet.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
