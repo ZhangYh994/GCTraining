@@ -16,6 +16,7 @@ let pieceSize = 100;
 const BOARD_WIDTH = 0.6 * 0.7 * 1200;
 const POOL_WIDTH = 0.4 * 0.7 * 1400;
 const BOARD_HEIGHT = 0.85 * 600;
+const POOL_HEIGHT = 600;
 
 // 洗牌动画时长（毫秒）
 const SHUFFLE_ANIMATION_DURATION = 600;
@@ -68,7 +69,6 @@ function createPieces() {
     div.style.backgroundPosition = `-${piece.col * pieceSize}px -${piece.row * pieceSize}px`;
     div.setAttribute('data-idx', piece.idx);
     div.addEventListener('mousedown', onDragStart);
-    div.addEventListener('touchstart', onDragStart, {passive: false});
     piecesPool.appendChild(div);
     piece.el = div;
     piece.left = null;
@@ -177,6 +177,7 @@ function onDragStart(e) {
   // 记录初始鼠标与碎片左上角的偏移
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  
   // 计算当前碎片在屏幕上的绝对位置
   const rect = draggingPiece.el.getBoundingClientRect();
   offsetX = clientX - rect.left;
@@ -190,8 +191,6 @@ function onDragStart(e) {
   document.body.appendChild(draggingPiece.el);
   document.addEventListener('mousemove', onDragMove);
   document.addEventListener('mouseup', onDragEnd);
-  document.addEventListener('touchmove', onDragMove, {passive: false});
-  document.addEventListener('touchend', onDragEnd);
 }
 
 
@@ -205,8 +204,8 @@ function onDragMove(e) {
   const poolRect = piecesPool.getBoundingClientRect();
   const minX = Math.min(boardRect.left, poolRect.left);
   const maxX = Math.max(boardRect.right, poolRect.right) - pieceSize;
-  const minY = Math.min(boardRect.top, poolRect.top);
-  const maxY = Math.max(boardRect.bottom, poolRect.bottom) - pieceSize;
+  const minY = Math.max(boardRect.top, poolRect.top);
+  const maxY = Math.min(boardRect.bottom, poolRect.bottom) - pieceSize;
   let x = clientX - offsetX;
   let y = clientY - offsetY;
   // 限制只能在主区域包围盒内
@@ -249,7 +248,7 @@ function onDragEnd(e) {
     let x = clientX - poolRect.left - pieceSize / 2;
     let y = clientY - poolRect.top - pieceSize / 2;
     x = Math.max(0, Math.min(POOL_WIDTH - pieceSize, x));
-    y = Math.max(0, Math.min(BOARD_HEIGHT - pieceSize, y));
+    y = Math.max(0, Math.min(POOL_HEIGHT - pieceSize, y));
     targetParent = piecesPool;
     targetLeft = x;
     targetTop = y;
@@ -296,11 +295,11 @@ function onDragEnd(e) {
     void draggingPiece.el.offsetHeight;
     // 触发吸附动画
     draggingPiece.el.style.transition = 'left 0.18s, top 0.18s, box-shadow 0.18s, transform 0.18s';
-    draggingPiece.el.style.left = finalLeft + 'px';
-    draggingPiece.el.style.top = finalTop + 'px';
     if (isBoard) {
       draggingPiece.left = finalLeft;
       draggingPiece.top = finalTop;
+      draggingPiece.el.style.left = finalLeft + 'px';
+      draggingPiece.el.style.top = finalTop + 'px';
       draggingPiece.el.classList.remove('in-pool');
       // 如果吸附到正确格子，再加吸附动画
       if (
@@ -320,8 +319,6 @@ function onDragEnd(e) {
   draggingPiece = null;
   document.removeEventListener('mousemove', onDragMove);
   document.removeEventListener('mouseup', onDragEnd);
-  document.removeEventListener('touchmove', onDragMove);
-  document.removeEventListener('touchend', onDragEnd);
   checkSolved();
 }
 
@@ -329,8 +326,8 @@ function onDragEnd(e) {
 function checkSolved() {
   solved = pieces.every(p =>
     p.inBoard &&
-    Math.abs((p.left ?? -999) - p.correctLeft) < 2 &&
-    Math.abs((p.top ?? -999) - p.correctTop) < 2
+    Math.abs((p.left ?? -999) - p.correctLeft) < 10 &&
+    Math.abs((p.top ?? -999) - p.correctTop) < 10
   );
   if (solved) {
     message.textContent = '🎉 恭喜你完成拼图!';

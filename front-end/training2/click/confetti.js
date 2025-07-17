@@ -4,14 +4,14 @@
   let confettiParticles = [];
   let confettiTimer = null;
   const COLORS = ['#f44336','#ffeb3b','#4caf50','#2196f3','#ff9800','#e91e63','#00bcd4','#8bc34a'];
-  const PARTICLE_COUNT = 120;
-  const DURATION = 1800; 
+  const PARTICLE_COUNT = 600;
+  const DURATION = 6000;
 
   function randomBetween(a, b) { return a + Math.random() * (b - a); }
 
   function createParticle(w, h) {
     const angle = randomBetween(-Math.PI/3, -2*Math.PI/3);
-    const speed = randomBetween(3, 7);
+    const speed = randomBetween(3, 6);
     return {
       x: randomBetween(0, w),
       y: randomBetween(-40, 0),
@@ -19,7 +19,7 @@
       color: COLORS[Math.floor(Math.random()*COLORS.length)],
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
-      ay: 0.18 + Math.random()*0.12,
+      ay: 0.06 + Math.random()*0.12,
       rot: randomBetween(0, 2*Math.PI),
       vr: randomBetween(-0.1, 0.1)
     };
