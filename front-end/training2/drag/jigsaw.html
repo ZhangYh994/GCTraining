@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拼图小游戏</title>
+  <link rel="stylesheet" href="jigsaw.css">
+</head>
+<body>
+  <div id="jigsaw-container">
+    <div id="controls">
+      <label>选择图片:
+        <input type="file" id="image-input" accept="image/*">
+      </label>
+      <label>难度:
+        <select id="difficulty">
+          <option value="3">3 x 3</option>
+          <option value="4">4 x 4</option>
+          <option value="5">5 x 5</option>
+        </select>
+      </label>
+      <button id="restart-btn">重新开始</button>
+    </div>
+    <div id="main-area">
+      <div id="original-image-area">
+        <img id="original-image" src="" alt="原图" />
+      </div>
+      <div id="puzzle-area">
+        <div id="puzzle-board"></div>
+        <div id="pieces-pool"></div>
+      </div>
+    </div>
+    <div id="game-message"></div>
+  </div>
+  <script src="jigsaw.js"></script>
+</body>
+</html>
